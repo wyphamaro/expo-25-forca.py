@@ -1,11 +1,15 @@
 import random
+import os  # Importar o os para limpar o terminal
 
-# lista das palavras
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 palavras = [
     'PYTHON', 'STRING', 'ALGORITIMOS', 'COMPUTADOR', 'TABELA'
 ]
 
 def jogar():
+    limpar_tela()
     print("\033[34mJOGO DA FORCA 🕹️​\033[0m")  # Azul para o título
     print("Adivinhe a palavra!\n")
 
@@ -21,6 +25,7 @@ def jogar():
                 exibicao += f"\033[32m{letra} \033[0m"  # Verde para letras certas
             else:
                 exibicao += '_ '
+
         print(f"\nPalavra: {exibicao.strip()}")
         print(f"\033[31mLetras erradas:\033[0m {' '.join(letras_erradas)}")  # Vermelho
         print(f"Tentativas restantes: {tentativas}")
@@ -33,9 +38,14 @@ def jogar():
 
         if len(tentativa) != 1 or not tentativa.isalpha():
             print("\033[33mDigite apenas UMA letra válida.\033[0m")  # Amarelo
+            input("\nPressione ENTER para continuar...")
+            limpar_tela()
             continue
+
         if tentativa in letras_descobertas or tentativa in letras_erradas:
             print("\033[33mVocê já tentou essa letra.\033[0m")  # Amarelo
+            input("\nPressione ENTER para continuar...")
+            limpar_tela()
             continue
 
         if tentativa in palavra:
@@ -46,9 +56,11 @@ def jogar():
             letras_erradas.append(tentativa)
             tentativas -= 1
 
+        input("\nPressione ENTER para continuar...")
+        limpar_tela()
+
     print(f"\n\033[31mGame Over! A palavra era: {palavra}\033[0m")  # Vermelho final
 
-# Início do jogo
 while True:
     jogar()
     resposta = input("\nQuer jogar de novo? (s/n): ").strip().lower()
